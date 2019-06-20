@@ -8,12 +8,15 @@ ENV REDPEN_VERSION="1.9.0" REDPEN_DIR="/opt/redpen"
 ENV PERLLIB="${PO4A_DIR}/lib" \
     PATH="${PO4A_DIR}:${JBAKE_DIR}/bin:${REDPEN_DIR}/bin:${PATH}"
 
+ENV BUILD_DEPS="unzip curl"
+
 RUN mkdir -p /usr/share/man/man1 && \
-    apt-get update -y && apt-get install unzip curl perl openjdk-8-jdk python3-pip python3-dev -y
+    apt-get update -y && apt-get install $BUILD_DEPS gettext perl openjdk-8-jdk python3-pip python3-dev -y
 
 RUN mkdir -p "${PO4A_DIR}" && \
     curl -L -o /tmp/po4a.tar.gz "https://github.com/mquinson/po4a/releases/download/v${PO4A_VERSION}/po4a-${PO4A_VERSION}.tar.gz" && \
-    tar -xvzf /tmp/po4a.tar.gz -C ${PO4A_DIR} --strip-components=1
+    tar -xvzf /tmp/po4a.tar.gz -C ${PO4A_DIR} --strip-components=1 && \
+    yes | cpan install Unicode::GCString
 
 RUN mkdir -p "${JBAKE_DIR}" && \
     temp=$(mktemp -d) && \
