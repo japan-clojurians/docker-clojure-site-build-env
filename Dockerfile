@@ -11,7 +11,7 @@ ENV PERLLIB="${PO4A_DIR}/lib" \
 ENV BUILD_DEPS="unzip curl"
 
 RUN mkdir -p /usr/share/man/man1 && \
-    apt-get update -y && apt-get install $BUILD_DEPS gettext perl openjdk-8-jdk python3-pip python3-dev -y
+    apt-get update -y && apt-get install $BUILD_DEPS git gettext perl openjdk-8-jdk python3-pip python3-dev -y
 
 RUN mkdir -p "${PO4A_DIR}" && \
     curl -L -o /tmp/po4a.tar.gz "https://github.com/mquinson/po4a/releases/download/v${PO4A_VERSION}/po4a-${PO4A_VERSION}.tar.gz" && \
